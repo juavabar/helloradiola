@@ -13,6 +13,9 @@
   "dependencies": {
     "q": "1.4.1"
   },
+  "engines": {
+    "nodejs": "6.9.1"
+  },
   "author": "",
   "license": "ISC",
   "bugs": {
