@@ -1,0 +1,19 @@
+{
+  "name": "helloradiola",
+  "version": "1.0.0",
+  "description": "Readme helloradiola",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juavabar/helloradiola.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/juavabar/helloradiola/issues"
+  },
+  "homepage": "https://github.com/juavabar/helloradiola#readme"
+}
