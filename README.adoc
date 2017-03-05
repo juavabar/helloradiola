@@ -7,7 +7,6 @@ Kumori Systems v0.0.1, Marzo 2016
 :compat-mode:
 :doctype: article
 :experimental:
-:icons: font
 :sectanchors:
 :sectlinks:
 :sectnums:
