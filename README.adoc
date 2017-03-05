@@ -1,0 +1,385 @@
+= eCloud Quick Start
+Kumori Systems v0.0.1, Marzo 2016
+:toc:
+:toc-title: Indice
+:toc-placement: preamble
+:toclevels: 3
+:compat-mode:
+:doctype: article
+:experimental:
+:icons: font
+:sectanchors:
+:sectlinks:
+:sectnums:
+:imagesdir: ./images
+
+Este documento describe los elementos básicos de la plataforma eCloud, y guía
+al desarrollador en la implementación y testeo de una primera aplicación
+desarrollada con Nodejs + CoffeeScript. +
+Este documento *no* es un manual completo o guía de referencia de eCloud.
+
+toc::[]
+
+== eCloud
+
+eCloud es un PaaS que facilita el desarrollo, despliegue y gestión del ciclo
+de vida de aplicaciones basadas en microservicios.
+
+eCloud se ejecuta sobre un IaaS, del cual obtiene y gestiona los recursos de
+forma transparente al desarrollador de una aplicación.
+Actualmente soporta AWS, OVH y OpenStack.
+
+El objetivo de eCloud es conseguir aplicaciones elásticas que se adapten
+(escalen) automáticamente a las condiciones de carga, cumpliendo un SLA
+previamente acordado y minimizando el coste incurrido en el IAAS subyacente.
+
+=== Arquitectura de una aplicación en eCloud
+
+En eCloud, las aplicaciones siguen una arquitectura basada en microservicios.
+
+La aplicación se desglosa en distintos *componentes*, con las siguientes
+características:
+
+- Autónomo: se ejecuta de forma independiente al resto de componentes. De hecho,
+no tienen por qué desarrollarse con el mismo lenguaje.+
+- Se comunica con otros componentes a través de canales previamente declarados.+
+- Preferiblemente con un tamaño _pequeño_, ofreciendo una funcionalidad
+concreta (alta cohesion).+
+- Escalan de forma independiente (tanto horizontal como verticalmente)+
+- Control de versiones independiente.+
+
+Un *servicio* es la declaración de un conjunto de componentes y la descripción
+de cómo estos componentes están conectados a través de *canales*, formando una
+topología concreta.
+
+Componentes y servicios se registran en la plataforma eCloud de forma
+independiente.
+Esto significa que dos servicios pueden declarar el uso de un mismo componente,
+siempre que tengan autorización para hacerlo.
+
+Una *aplicación de servicio* es la declaración de un conjunto de valores
+con los que se instanciará un servicio y sus componentes.
+
+Al igual que los componentes están interconectados mediante canales, los
+
+TBD
+
+==== Componentes y roles
+
+TBD.
+Citar recursos.
+
+La aplicación se desglosa en distintos *componentes*, con las siguientes
+características:
+
+- Autónomo: se ejecuta de forma independiente al resto de componentes. De hecho,
+no tienen por qué desarrollarse con el mismo lenguaje.+
+- Se comunica con otros componentes a través de canales previamente declarados.+
+- Preferiblemente con un tamaño _pequeño_, ofreciendo una funcionalidad
+concreta (alta cohesion).+
+- Escalan de forma independiente (tanto horizontal como verticalmente)+
+- Control de versiones independiente.+
+
+==== Canales y conectores
+
+TBD.
+Citar protocolo de canal.
+
+==== Instancia
+
+TBD.
+
+==== Servicio
+
+TBD.
+
+==== Aplicacion de servicio
+
+TBD.
+
+==== Runtime
+
+TBD
+
+== Ciclo de trabajo
+
+=== Admission
+
+TBD
+
+==== Utilidad de consola y VSCode
+
+TBD
+
+=== Registro de componentes y servicios
+
+TBD
+
+=== Bundles
+
+TBD
+
+=== Despliegue
+
+TBD
+
+=== Logs
+
+TBD
+
+== Entorno de trabajo local: LocalStamp
+
+LocalStamp es una versión reducida de eCloud, incluida en una imagen Docker, 
+que puede ejecutarse en la máquina de desarrollo.
+
+Ofrece el mismo API que la plataforma real, permitiendo el registro de 
+componentes y servicios, así como el despliegue de una aplicación de servicio.
+Al igual que en eCloud, las instancias de cada componente se ejecutan en 
+contenedores Docker y están interconectadas mediante canales.
+
+Lógicamente no incluye muchas de las características de eCloud, como el control
+del ciclo de vida de la aplicación de servicio (autoescalado, reinicio de 
+instancias, etc.) o el acceso a recursos (volúmenes persistentes, nombres de
+dominio, etc.).
+
+=== Requisitos
+
+- S.O. Linux (testeado con Ubuntu 14.04 y 16.04) +
+- docker v1.10.03 +
+- nodejs v4.3.2 +
+
+TIP: La utilidad _nvm_ (_Node Version Manager_) facilita la gestión de varias 
+versiones de Nodejs en la misma máquina. +
+
+- npm v3.10.0 o superior +
+- coffeeScript v1.10.0 o superior +
+- git +
+- curl +
+
+TIP: Es recomendable instalar también el paquete _jq_, para formatear el 
+resultado devuelto por las peticiones http realizadas con _curl_.
+
+- zip +
+
+=== SDK
+
+CAUTION: PENDIENTE ESTABLECER DE DÓNDE CONSEGUIR EL SDK, Y CLAVES NECESARIAS
+
+LocalStamp, y las herramientas necesarias para su uso, está incluido en el SDK 
+de eCloud.
+
+El SDK puede descargarse de un repositorio GIT:
+
+----
+git clone -b bundle-tools git@gitlab.iti.upv.es:iti_kumori_paas/sdk.git
+----
+
+Runtime-tool::
+
+Para poder utilizar LocalStamp, es necesario obtener tres imágenes Docker:
+
+El SDK incluye la utilidad runtime-tool para obtener dichas imágenes de un 
+repositorio de eCloud.
+
+cd sdk/tools/runtime-tools
+rm -rf node_modules
+npm install
+cd ../..
+
+=== Descarga de imágenes necesarias
+
+eslap.cloud/local-stamp/1_0_3::
+TBD
+
+eslap.cloud/elk/1_0_0::
+TBD
+
+eslap.cloud/runtime/native/1_0_0::
+TBD
+
+cd sdk/tools
+./runtime-tool.sh install -n eslap://eslap.cloud/local-stamp/1_0_3
+./runtime-tool.sh install -n eslap://eslap.cloud/runtime/native/1_0_0
+./runtime-tool.sh install -n eslap://eslap.cloud/elk/1_0_0
+
+=== Ejecución de LocalStamp
+
+TBD
+
+chmod +x local-stamp-start.sh
+
+=== Acceso a logs
+
+TBD. ElasticSearch + Logstash + Kibana
+
+== Ejemplo 1: FE (restapi express)
+
+TBD.
+
+=== Coffee
+
+TBD.
+
+== Ejemplo 2: FE + Storage (uso de LB)
+
+TBD.
+
+== Ejemplo 2: FE + Mongo (uso de ProxyTcp y componente Legacy)
+
+TBD.
+
+4.-
+El localstamp me dice esto:
+
+Executing Logger in 172.17.0.3
+Starting Kibana on port 5601
+Local Stamp Started
+Listening on port 8090
+
+O sea:
+- tengo el log en 172.17.0.3
+- tengo admission en http://localhost:8090/admission
+
+Por ejemplo, puedo ejecutar esto:
+curl http://localhost:8090/admission/deployments
+
+En los curlutil.sh, fijo
+ADMISSION='127.0.0.1:8090'
+
+5.-
+Veo estos dockers levantados
+
+----
+jvalero@darthvader:~/slap$ docker ps -a
+CONTAINER ID        IMAGE                           COMMAND                  CREATED             STATUS              PORTS                                         NAMES
+4a42618db03f        eslap.cloud/elk:1_0_0           "/bin/sh -c 'elastics"   3 minutes ago       Up 3 minutes        9200/tcp, 0.0.0.0:5601->5601/tcp, 28777/tcp   local-stamp-logger
+d677032812ba        eslap.cloud/local-stamp:1_0_3   "/eslap/component/scr"   3 minutes ago       Up 3 minutes        0.0.0.0:8090->8090/tcp                        local-stamp
+----
+
+6.-
+Voy a probar a registrar y desplegar mi servicio http-service
+
+----
+curl -s -m 60000 http://${ADMISSION}/admission/bundles -F bundlesZip=@${PROJECT}/service_bundle.zip
+
+{
+  "data": {
+    "errors": [],
+    "successful": [
+      "Registered element: eslap://httpserviceexample/components/cfe/1_0_0",
+      "Registered element: eslap://httpserviceexample/services/httpserviceexample/1_0_0"
+    ]
+  },
+  "message": "Bundle registration finished with no errors.",
+  "success": true
+}
+----
+
+----
+curl -s -m 60000 http://${ADMISSION}/admission/bundles -F bundlesZip=@${PROJECT}/deploy_bundle.zip
+
+{
+  "data": {
+    "deployments": {
+      "successful": [
+        {
+          "serviceURN": "eslap://httpserviceexample/services/httpserviceexample/1_0_0",
+          "volumes": {},
+          "portMapping": [
+            {
+              "port": "9000",
+              "endpoint": "sepdest",
+              "role": "cfe",
+              "iid": "cfe_1"
+            }
+          ],
+          "roles": {
+            "cfe": {
+              "instances": [
+                "cfe_1"
+              ]
+            }
+          },
+          "deploymentURN": "slap://httpserviceexample/deployments/20170220_170424/48fbc942"
+        }
+      ],
+      "errors": []
+    },
+    "errors": [],
+    "successful": []
+  },
+  "message": "Bundle registration finished with no errors.",
+  "success": true
+}
+----
+
+7.-
+Desde firefox, accedo a http://localhost:9000, sin problema
+
+8.-
+Para cerrar, me cargo (ctrl+c) el localstamp. No me preocupo de replegar, etc. Cuando se inicia el local-stamp, parte de un directorio de trabajo limpio.
+
+9.-
+Cuando desplieguo la aplicación de test de mongo, tengo un mini-problema:
+tras el ctrl-c, en alguna ocasión se me han quedado los procesos mongo en marcha.
+
+
+10.- El despliegue se ve ok
+
+----
+{
+  "data": {
+    "deployments": {
+      "successful": [
+        {
+          "serviceURN": "eslap://mongodbsimpleexample/services/mongodbsimpleexample/0_0_1",
+          "volumes": {},
+          "portMapping": [
+            {
+              "port": "9000",
+              "endpoint": "sepdest",
+              "role": "fe",
+              "iid": "fe_1"
+            }
+          ],
+          "roles": {
+            "mongodb": {
+              "instances": [
+                "mongodb_2"
+              ]
+            },
+            "fe": {
+              "instances": [
+                "fe_1"
+              ]
+            }
+          },
+          "deploymentURN": "slap://mongodbsimpleexample/deployments/20170220_172455/b775071f"
+        }
+      ],
+      "errors": []
+    },
+    "errors": [],
+    "successful": []
+  },
+  "message": "Bundle registration finished with no errors.",
+  "success": true
+}
+----
+
+----
+jvalero@darthvader:/tmp$ docker ps -a
+CONTAINER ID        IMAGE                              COMMAND                  CREATED             STATUS              PORTS                                         NAMES
+dc1ab8531411        eslap.cloud/runtime/native:1_0_0   "/eslap/runtime-agent"   3 minutes ago       Up 3 minutes                                                      local-stamp_local-stamp_mongodb_2
+89aa32ff3f89        eslap.cloud/runtime/native:1_0_0   "/eslap/runtime-agent"   3 minutes ago       Up 3 minutes        0.0.0.0:9000->8000/tcp                        local-stamp_local-stamp_fe_1
+c3ca663c5a88        eslap.cloud/local-stamp:1_0_3      "/eslap/component/scr"   4 minutes ago       Up 4 minutes        0.0.0.0:8090->8090/tcp                        local-stamp
+4a42618db03f        eslap.cloud/elk:1_0_0              "/bin/sh -c 'elastics"   34 minutes ago      Up 34 minutes       9200/tcp, 0.0.0.0:5601->5601/tcp, 28777/tcp   local-stamp-logger
+jvalero@darthvader:/tmp$
+----
+
+11.-
+El servicio responde correctamente
+
+----
+curl http://localhost:9000/insert?"dbname=d1&collection=c1&field=f1&value=v1" | jq .
+----
